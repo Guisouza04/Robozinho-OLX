@@ -21,6 +21,11 @@ jobs:
         with:
           python-version: '3.10.12'
 
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:  
+          node-version: '18.20.8'
+
       - name: Instalar dependências
         run: |
           pip install -r requirements.txt
