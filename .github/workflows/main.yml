@@ -1,0 +1,39 @@
+name: OLX Automation
+
+on:
+  schedule:
+    - cron: '0 09 * * *'    # 12:00 UTC-3
+    - cron: '0 15 * * *'    # 18:00 UTC-3
+    - cron: '15 15 * * *'
+    - cron: '55 20 * * *'   # 23:55 UTC-3
+  workflow_dispatch:         # permite rodar manualmente também
+
+jobs:
+  run-robot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.12'
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+          # adicione outras libs que usar
+
+      - name: Instalar Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Rodar automação
+        run: robot -d ./log tests/suites/suite01.robot
+
+      - name: Salvar logs como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-logs
+          path: ./log/
