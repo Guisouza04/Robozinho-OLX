@@ -90,7 +90,7 @@ Verifica se dicionário está vázio
     [Arguments]                   ${anunciosValidos}
     ${tamanho}                    Get Length    ${anunciosValidos}
     Log                           ${anunciosValidos}  
-    IF  ${tamanho} == 1
+    IF  ${tamanho} == 0
         Log                       Nenhum anúncio para filtrar.    console=True
         Enviar email com os dados coletados  ${anunciosValidos}
     END         
