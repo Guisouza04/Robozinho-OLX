@@ -8,6 +8,9 @@ on:
     - cron: '55 20 * * *'   # 23:55 UTC-3
   workflow_dispatch:         # permite rodar manualmente também
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   run-robot:
     runs-on: ubuntu-latest
