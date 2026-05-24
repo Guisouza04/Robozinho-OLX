@@ -6,7 +6,7 @@ Resource  ../../variables/testData.robot
 
 *** Keywords ***
 Abrir navegador
-  New Browser           chromium            headless=False    args=["--start-maximized"]
+  New Browser           chromium            headless=True    args=["--start-maximized"]
   New Context           viewport=None
   Set Browser Timeout   ${DEFAULT_TIMEOUT}
 
