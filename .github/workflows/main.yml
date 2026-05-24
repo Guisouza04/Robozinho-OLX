@@ -1,12 +1,11 @@
 name: OLX Automation
-
 on:
   schedule:
-    - cron: '0 09 * * *'    # 12:00 UTC-3
-    - cron: '0 15 * * *'    # 18:00 UTC-3
+    - cron: '0 09 * * *'
+    - cron: '0 15 * * *'
     - cron: '15 15 * * *'
-    - cron: '55 20 * * *'   # 23:55 UTC-3
-  workflow_dispatch:         # permite rodar manualmente também
+    - cron: '55 20 * * *'
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -14,7 +13,6 @@ env:
 jobs:
   run-robot:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
@@ -26,18 +24,18 @@ jobs:
 
       - name: Instalar Node.js
         uses: actions/setup-node@v4
-        with:  
+        with:
           node-version: '18.20.8'
 
       - name: Instalar dependências
-        run: |
-          pip install -r requirements.txt
-          # adicione outras libs que usar
+        run: pip install -r requirements.txt
 
-      - name: Instalar Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Inicializar RF-Browser        # ← faltava esse
+        run: rfbrowser init
 
       - name: Rodar automação
+        env:
+          GMAIL_SENHA: ${{ secrets.GMAIL_SENHA }}    # ← faltava esse
         run: robot -d ./log tests/suites/suite01.robot
 
       - name: Salvar logs como artefato
