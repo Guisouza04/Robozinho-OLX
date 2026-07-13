@@ -22,7 +22,11 @@ ${ANUNCIOS_SELECIONADOS}          ${NONE}
 
 *** Keywords ***
 Ir para página de imóveis com os filtros aplicados
-    New Page                  url=${URL_BASE_IMOVEIS}/${CIDADE}/${REGIÃO}?ps=${PREÇO_MIN}&pe=${PREÇO_MAX}&sf=1  wait_until=domcontentloaded                  
+    New Page                  url=${URL_BASE_IMOVEIS}/${CIDADE}/${REGIÃO}?ps=${PREÇO_MIN}&pe=${PREÇO_MAX}&sf=1  wait_until=domcontentloaded
+    # Monta xpath=(...)[1] via Catenate: ${XPATH_ANUNCIO}[1] seria acesso a item (retorna a letra 'p')
+    ${primeiroAnuncio}=       Catenate    SEPARATOR=    ${XPATH_ANUNCIO}    [1]
+    Wait For Elements State   ${primeiroAnuncio}    visible    timeout=${DEFAULT_TIMEOUT}
+    ...                       message=Nenhum card de anúncio encontrado. A OLX pode estar bloqueando o ambiente (IP de datacenter / headless).
 
 Seleciona os anúncios válidos
     [Arguments]                   ${anunciosValidos}
