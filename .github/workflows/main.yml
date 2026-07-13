@@ -39,6 +39,7 @@ jobs:
         run: robot -d ./log tests/suites/suite01.robot
 
       - name: Salvar logs como artefato
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: robot-logs
