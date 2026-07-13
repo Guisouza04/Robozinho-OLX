@@ -12,7 +12,9 @@ env:
 
 jobs:
   run-robot:
-    runs-on: ubuntu-latest
+    # Precisa rodar de um IP residencial: o Cloudflare da OLX bloqueia os
+    # IPs de datacenter dos runners hospedados do GitHub (ubuntu-latest).
+    runs-on: self-hosted
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
